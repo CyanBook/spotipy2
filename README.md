@@ -1,5 +1,5 @@
 # Spotipy2
-The next generation Spotify Web API wrapper for Python 3.6+
+The next generation Spotify Web API wrapper for Python 3.7+
 
 ## Documentation
 The documentation has still to be created. Stay tuned!
