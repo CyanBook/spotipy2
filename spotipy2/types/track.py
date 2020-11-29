@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import List
 
 
 class Track:
@@ -23,7 +23,8 @@ class Track:
         uri: str,
         is_playable: bool = None,
         linked_from: bool = None,
-        restrictions: Any = None
+        restrictions: dict = None,
+        **kwargs
     ):
         self.album = album,
         self.artists = artists,
