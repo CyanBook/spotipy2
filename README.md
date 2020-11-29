@@ -3,7 +3,7 @@
         <img src="https://svgshare.com/i/Rs1.svg" alt="Spotipy2">
     </a>
     <br>
-    <b>The next generation Spotify Web API wrapper for Python 3.6+</b>
+    <b>The next generation Spotify Web API wrapper for Python 3.7+</b>
     <br>
     <a href="https://github.com/cyanbook/spotipy2">
         Documentation
