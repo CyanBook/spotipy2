@@ -1,9 +1,10 @@
 from aiohttp import ClientSession
 
 from spotipy2.auth import ClientCredentialsFlow
+from spotipy2.methods import Methods
 
 
-class Spotify:
+class Spotify(Methods):
     def __init__(
         self,
         auth_flow: ClientCredentialsFlow
