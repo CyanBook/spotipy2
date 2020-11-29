@@ -48,5 +48,5 @@ class Track:
         self.restrictions = restrictions
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Track":
+    async def from_dict(cls, d: dict) -> "Track":
         return cls(**d)
