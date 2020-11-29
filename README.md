@@ -1,8 +1,22 @@
-# Spotipy2
-The next generation Spotify Web API wrapper for Python 3.7+
-
-## Documentation
-The documentation has still to be created. Stay tuned!
+<p align="center">
+    <a href="https://github.com/cyanbook/spotipy2">
+        <img src="https://svgshare.com/i/Rs1.svg" alt="Spotipy2">
+    </a>
+    <br>
+    <b>The next generation Spotify Web API wrapper for Python 3.6+</b>
+    <br>
+    <a href="https://github.com/cyanbook/spotipy2">
+        Documentation
+    </a>
+    •
+    <a href="https://github.com/cyanbook/spotipy2/releases">
+        Releases
+    </a>
+    •
+    <a href="https://t.me/spotipy2">
+        Community
+    </a>
+</p>
 
 ## Installation
 ```bash
