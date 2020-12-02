@@ -2,6 +2,7 @@ from aiohttp import ClientSession
 
 from spotipy2.auth import ClientCredentialsFlow
 from spotipy2.methods import Methods
+from spotipy2.exceptions import SpotifyException
 
 
 class Spotify(Methods):
@@ -28,7 +29,17 @@ class Spotify(Methods):
             params=params,
             headers=headers
         ) as r:
-            return await r.json()
+            json = await r.json()
+
+            try:
+                assert r.status == 200
+            except AssertionError:
+                raise SpotifyException(
+                    json["error"]["status"],
+                    json["error"]["message"]
+                )
+            else:
+                return json
 
     async def _get(self, endpoint, params=None):
         return await self._req("GET", endpoint, params)
