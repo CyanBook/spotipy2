@@ -17,5 +17,5 @@ class TrackMethods:
 
         return [await Track.from_dict(track) for track in tracks["tracks"]]
 
-    async def get_track(self: spotipy2.Spotify, track_id: int) -> Track:
+    async def get_track(self: spotipy2.Spotify, track_id: str) -> Track:
         return await Track.from_dict(await self._get(f"tracks/{track_id}"))
