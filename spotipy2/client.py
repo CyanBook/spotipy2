@@ -11,12 +11,16 @@ class Spotify(Methods):
         auth_flow: ClientCredentialsFlow,
         *args,
         **kwargs
-    ):
+    ) -> None:
         self.auth_flow = auth_flow
         self.http = ClientSession(*args, **kwargs)
 
-    async def stop(self):
-        await self.http.close()
+    async def stop(self) -> bool:
+        try:
+            await self.http.close()
+        except Exception:
+            return False
+        return True
 
     async def _req(self, method, endpoint, params=None) -> dict:
         API_URL = "https://api.spotify.com/v1/"
@@ -41,5 +45,5 @@ class Spotify(Methods):
             else:
                 return json
 
-    async def _get(self, endpoint, params=None):
+    async def _get(self, endpoint, params=None) -> dict:
         return await self._req("GET", endpoint, params)
