@@ -1,3 +1,4 @@
+from typing import Optional
 from aiohttp import ClientSession
 
 from spotipy2.auth import ClientCredentialsFlow
@@ -22,7 +23,12 @@ class Spotify(Methods):
             return False
         return True
 
-    async def _req(self, method, endpoint, params=None) -> dict:
+    async def _req(
+        self,
+        method: str,
+        endpoint: str,
+        params: Optional[dict] = None
+    ) -> dict:
         API_URL = "https://api.spotify.com/v1/"
         token = await self.auth_flow.get_access_token(self.http)
         headers = {"Authorization": f"Bearer {token.access_token}"}
@@ -45,5 +51,5 @@ class Spotify(Methods):
             else:
                 return json
 
-    async def _get(self, endpoint, params=None) -> dict:
+    async def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         return await self._req("GET", endpoint, params)
