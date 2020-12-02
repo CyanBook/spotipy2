@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Optional
 from aiohttp import ClientSession
 
@@ -53,3 +54,9 @@ class Spotify(Methods):
 
     async def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         return await self._req("GET", endpoint, params)
+
+    async def __aenter__(self) -> Spotify:
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+        await self.stop()
