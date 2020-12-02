@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Optional
 from datetime import datetime, timedelta
 
@@ -19,5 +20,5 @@ class Token:
         self.expires_at = datetime.now() + timedelta(seconds=self.expires_in)
 
     @classmethod
-    async def from_dict(cls, d: dict) -> "Token":
+    async def from_dict(cls, d: dict) -> Token:
         return cls(**d)
