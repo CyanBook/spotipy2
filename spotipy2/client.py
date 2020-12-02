@@ -17,13 +17,6 @@ class Spotify(Methods):
         self.auth_flow = auth_flow
         self.http = ClientSession(*args, **kwargs)
 
-    async def stop(self) -> bool:
-        try:
-            await self.http.close()
-        except Exception:
-            return False
-        return True
-
     async def _req(
         self,
         method: str,
@@ -54,6 +47,9 @@ class Spotify(Methods):
 
     async def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         return await self._req("GET", endpoint, params)
+
+    async def stop(self) -> None:
+        await self.http.close()
 
     async def __aenter__(self) -> Spotify:
         return self
