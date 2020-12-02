@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import List
 
 
@@ -26,13 +27,13 @@ class Track:
         restrictions: dict = None,
         **kwargs
     ):
-        self.album = album,
-        self.artists = artists,
+        self.album = album
+        self.artists = artists
         self.available_markets = available_markets
         self.disc_number = disc_number
         self.duration_ms = duration_ms
         self.explicit = explicit
-        self.external_ids = external_ids,
+        self.external_ids = external_ids
         self.external_urls = external_urls
         self.href = href
         self.id = id
@@ -48,5 +49,5 @@ class Track:
         self.restrictions = restrictions
 
     @classmethod
-    async def from_dict(cls, d: dict) -> "Track":
+    async def from_dict(cls, d: dict) -> Track:
         return cls(**d)
