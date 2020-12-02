@@ -7,10 +7,12 @@ from spotipy2.methods import Methods
 class Spotify(Methods):
     def __init__(
         self,
-        auth_flow: ClientCredentialsFlow
+        auth_flow: ClientCredentialsFlow,
+        *args,
+        **kwargs
     ):
         self.auth_flow = auth_flow
-        self.http = ClientSession()
+        self.http = ClientSession(*args, **kwargs)
 
     async def stop(self):
         await self.http.close()
