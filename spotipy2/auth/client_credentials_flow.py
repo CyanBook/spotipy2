@@ -10,12 +10,13 @@ from .token import Token
 class ClientCredentialsFlow(BaseAuthFlow):
     def __init__(
         self,
-        client_id: Optional[str] = None,
-        client_secret: Optional[str] = None,
+        client_id: str,
+        client_secret: str,
+        token: Optional[Token] = None
     ) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
-        self.token = None
+        self.token = token
 
     async def get_access_token(self, http: ClientSession) -> Token:
         API_URL = "https://accounts.spotify.com/api/token"
