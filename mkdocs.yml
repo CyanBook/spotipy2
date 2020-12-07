@@ -23,6 +23,9 @@ nav:
     - introduction/installation.md
   - Getting started:
     - getting-started/index.md
+    - Authentication:
+      - getting-started/authentication/index.md
+      - getting-started/authentication/token.md
 
 markdown_extensions:
   - pymdownx.highlight
