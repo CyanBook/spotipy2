@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 class Token:
@@ -16,7 +16,9 @@ class Token:
         self.token_type = token_type
         self.scope = scope
         self.expires_in = expires_in
-        self.expires_at = datetime.now() + timedelta(seconds=self.expires_in)
+        self.expires_at = datetime.now(
+            timezone.utc
+        ) + timedelta(seconds=self.expires_in)
         self.refresh_token = refresh_token
 
     @classmethod
