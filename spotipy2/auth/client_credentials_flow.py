@@ -1,7 +1,7 @@
 from typing import Optional
 from base64 import b64encode
 from aiohttp import ClientSession
-from datetime import datetime
+from datetime import datetime, timezone
 
 from .base_auth_flow import BaseAuthFlow
 from .token import Token
@@ -22,7 +22,7 @@ class ClientCredentialsFlow(BaseAuthFlow):
         API_URL = "https://accounts.spotify.com/api/token"
         GRANT_TYPE = {"grant_type": "client_credentials"}
 
-        if self.token and self.token.expires_at > datetime.now():
+        if self.token and self.token.expires_at > datetime.now(timezone.utc):
             return self.token
 
         async with http.post(
