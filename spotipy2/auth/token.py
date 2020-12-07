@@ -32,5 +32,5 @@ class Token:
             scopes=d["scope"].split(),
             expires_in=d["expires_in"],
             expires_at=expires_at,
-            refresh_token=d["refresh_token"]
+            refresh_token=d.get("refresh_token")
         )
