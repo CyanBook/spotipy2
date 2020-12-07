@@ -16,8 +16,8 @@ class Token:
         self.token_type = token_type
         self.scope = scope
         self.expires_in = expires_in
-        self.refresh_token = refresh_token
         self.expires_at = datetime.now() + timedelta(seconds=self.expires_in)
+        self.refresh_token = refresh_token
 
     @classmethod
     async def from_dict(cls, d: dict) -> Token:
