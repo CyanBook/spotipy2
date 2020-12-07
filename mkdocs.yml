@@ -21,6 +21,8 @@ nav:
   - Introduction:
     - introduction/quick-start.md
     - introduction/installation.md
+  - Getting started:
+    - getting-started/index.md
 
 markdown_extensions:
   - pymdownx.highlight
