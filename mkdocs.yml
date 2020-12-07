@@ -26,6 +26,8 @@ nav:
     - Authentication:
       - getting-started/authentication/index.md
       - getting-started/authentication/token.md
+      - Authorization Flows:
+        - getting-started/authentication/authorization-flows/client-credentials-flow.md      
 
 markdown_extensions:
   - pymdownx.highlight
