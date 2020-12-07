@@ -1,0 +1,27 @@
+site_name: Spotify2 Documentation
+
+repo_url: https://github.com/cyanbook/spotipy2
+repo_name: cyanbook/spotipy2
+
+theme:
+  name: material
+  favicon: img/favicon.ico
+  icon:
+    logo: material/spotify
+    repo: fontawesome/brands/git-alt
+  palette:
+    scheme: default
+    primary: teal
+  features:
+    - navigation.instant
+    - navigation.tabs
+
+nav:
+  - Home: index.md
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+  - toc:
+      permalink: true
