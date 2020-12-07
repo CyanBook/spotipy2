@@ -18,6 +18,9 @@ theme:
 
 nav:
   - Home: index.md
+  - Introduction:
+    - introduction/quick-start.md
+    - introduction/installation.md
 
 markdown_extensions:
   - pymdownx.highlight
