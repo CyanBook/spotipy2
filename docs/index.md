@@ -7,6 +7,10 @@
     <br>
     <b>The next generation Spotify Web API wrapper for Python 3.7+</b>
     <br>
+    <a href="https://github.com/cyanbook/spotipy2">
+        Source code
+    </a>
+    •
     <a href="https://github.com/cyanbook/spotipy2/releases">
         Releases
     </a>
