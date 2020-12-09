@@ -39,7 +39,7 @@ Although it's not mandatory, it speeds up the development and allows for excelle
 ### A class for each objects 
 Spotify2 has a custom class for each [Spotify object](https://developer.spotify.com/documentation/web-api/reference/object-model).
 
-This permits easier understanding of what you're doing, code more readable and maintanable, bound methods, and more.
+This permits easier understanding of what you're doing, code more readable and maintainable, bound methods, and more.
 
 ## Quick example
 ```python
