@@ -18,7 +18,7 @@ from spotipy2.auth import ClientCredentialsFlow
 
 
 # Print an artist's popularity score
-async def print_populairty_score(artist_id):
+async def print_popularity_score(artist_id):
     # Authenticate using ClientCredentialsFlow
     spo_client = Spotify(
         ClientCredentialsFlow(
@@ -32,6 +32,6 @@ async def print_populairty_score(artist_id):
         artist = await s.get_artist(artist_id)
         print(f"{artist.name}'s popularity score is {artist.popularity}/100")
 
-# Print Ed Sheeran's popularity score
-asyncio.run(print_populairty_score("6eUKZXaKkcviH0Ku9w2n3V"))
+# Print popularity score of Ed Sheeran
+asyncio.run(print_popularity_score("6eUKZXaKkcviH0Ku9w2n3V"))
 ```
