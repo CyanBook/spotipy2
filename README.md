@@ -56,9 +56,9 @@ async def get_track_name(track_id):
         )
     )
 
-    track = await spo_client.track(track_id)
-    print(f"The name of the track is {track.name}")
-    await spo_client.stop()
+    async with spo_client as s:
+        track = await s.get_track(track_id)
+        print(f"The name of the track is {track.name}")
 
 asyncio.run(get_track_name(input("Insert the track ID: ")))
 ```
