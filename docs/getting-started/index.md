@@ -1,7 +1,7 @@
 # Get started
-This section is decicated to you, fellow programmer.
+This section is dedicated to you, fellow programmer.
 
-This section's purpose is to make you more familiar with the wrapper i wrote.
+This section's purpose is to make you more familiar with the wrapper I wrote.
 
 ## How is this section organised?
 
