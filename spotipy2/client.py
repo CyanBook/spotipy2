@@ -8,6 +8,8 @@ from spotipy2.exceptions import SpotifyException
 
 
 class Spotify(Methods):
+    API_URL = "https://api.spotify.com/v1/"
+
     def __init__(
         self,
         auth_flow: ClientCredentialsFlow,
@@ -23,13 +25,12 @@ class Spotify(Methods):
         endpoint: str,
         params: Optional[dict] = None
     ) -> dict:
-        API_URL = "https://api.spotify.com/v1/"
         token = await self.auth_flow.get_access_token(self.http)
         headers = {"Authorization": f"Bearer {token.access_token}"}
 
         async with self.http.request(
             method,
-            f"{API_URL}{endpoint}",
+            f"{self.API_URL}{endpoint}",
             params=params,
             headers=headers
         ) as r:
