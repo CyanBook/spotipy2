@@ -1,0 +1,6 @@
+## This rule redirects to an external API, signing requests with a secret
+[[redirects]]
+  from = "/github"
+  to = "https://github.com/cyanbook/spotipy2"
+  status = 301
+  force = true
