@@ -10,7 +10,10 @@ class TrackMethods:
         self: spotipy2.Spotify,
         track_ids: List[str]
     ) -> List[Track]:
-        tracks = await self._get("tracks", params={"ids": ",".join(track_ids)})
+        tracks = await self._get(
+            "tracks",
+            params={"ids": ",".join([self.get_id(i) for i in track_ids])}
+        )
         return [await Track.from_dict(track) for track in tracks["tracks"]]
 
     async def get_track(self: spotipy2.Spotify, track_id: str) -> Track:

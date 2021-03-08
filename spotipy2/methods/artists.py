@@ -12,10 +12,11 @@ class ArtistMethods:
     ) -> List[Artist]:
         artists = await self._get(
             "artists",
-            params={"ids": ",".join(artist_ids)}
+            params={"ids": ",".join([self.get_id(i) for i in artist_ids])}
         )
-
         return [await Artist.from_dict(track) for track in artists["artists"]]
 
     async def get_artist(self: spotipy2.Spotify, artist_id: str) -> Artist:
-        return await Artist.from_dict(await self._get(f"artists/{artist_id}"))
+        return await Artist.from_dict(
+            await self._get(f"artists/{self.get_id(artist_id)}")
+        )
