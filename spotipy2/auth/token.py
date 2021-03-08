@@ -8,7 +8,7 @@ class Token:
         self,
         access_token: str,
         token_type: str,
-        scopes: List[str],
+        scopes: Optional[List[str]],
         expires_in: int,
         expires_at: datetime,
         refresh_token: Optional[str] = None
@@ -29,7 +29,7 @@ class Token:
         return cls(
             access_token=d["access_token"],
             token_type=d["token_type"],
-            scopes=d["scope"].split(),
+            scopes=d.get("scope", "").split() or None,
             expires_in=d["expires_in"],
             expires_at=expires_at,
             refresh_token=d.get("refresh_token")
