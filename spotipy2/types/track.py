@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import Optional, List
 
 from spotipy2.types import SimplifiedArtist
 
@@ -9,7 +9,6 @@ class Track:
         self,
         album,
         artists,
-        available_markets: List[str],
         disc_number: int,
         duration_ms: int,
         explicit: bool,
@@ -24,6 +23,7 @@ class Track:
         track_number: int,
         type: str,
         uri: str,
+        available_markets: Optional[List[str]] = None,
         is_playable: bool = None,
         linked_from: bool = None,
         restrictions: dict = None,

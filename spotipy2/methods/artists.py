@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 
 import spotipy2
-from spotipy2.types import Artist
+from spotipy2.types import Artist, Track
 
 
 class ArtistMethods:
@@ -20,3 +20,12 @@ class ArtistMethods:
         return Artist.from_dict(
             await self._get(f"artists/{self.get_id(artist_id)}")
         )
+
+    async def get_artist_top_tracks(
+        self: spotipy2.Spotify, artist_id: str, market: str = "US"
+    ) -> List[Track]:
+        top_tracks = await self._get(
+            f"artists/{self.get_id(artist_id)}/top-tracks",
+            params={"country": market}
+        )
+        return [Track.from_dict(track) for track in top_tracks["tracks"]]
