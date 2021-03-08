@@ -14,9 +14,9 @@ class TrackMethods:
             "tracks",
             params={"ids": ",".join([self.get_id(i) for i in track_ids])}
         )
-        return [await Track.from_dict(track) for track in tracks["tracks"]]
+        return [Track.from_dict(track) for track in tracks["tracks"]]
 
     async def get_track(self: spotipy2.Spotify, track_id: str) -> Track:
-        return await Track.from_dict(
+        return Track.from_dict(
             await self._get(f"tracks/{self.get_id(track_id)}")
         )

@@ -29,5 +29,5 @@ class Artist:
         self.uri = uri
 
     @classmethod
-    async def from_dict(cls, d: dict) -> Artist:
+    def from_dict(cls, d: dict) -> Artist:
         return cls(**d)

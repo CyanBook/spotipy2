@@ -14,9 +14,9 @@ class ArtistMethods:
             "artists",
             params={"ids": ",".join([self.get_id(i) for i in artist_ids])}
         )
-        return [await Artist.from_dict(track) for track in artists["artists"]]
+        return [Artist.from_dict(track) for track in artists["artists"]]
 
     async def get_artist(self: spotipy2.Spotify, artist_id: str) -> Artist:
-        return await Artist.from_dict(
+        return Artist.from_dict(
             await self._get(f"artists/{self.get_id(artist_id)}")
         )
