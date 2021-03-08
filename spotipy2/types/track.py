@@ -1,6 +1,8 @@
 from __future__ import annotations
 from typing import List
 
+from spotipy2.types import SimplifiedArtist
+
 
 class Track:
     def __init__(
@@ -28,7 +30,7 @@ class Track:
         **kwargs
     ):
         self.album = album
-        self.artists = artists
+        self.artists = [SimplifiedArtist.from_dict(a) for a in artists]
         self.available_markets = available_markets
         self.disc_number = disc_number
         self.duration_ms = duration_ms
