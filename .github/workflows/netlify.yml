@@ -1,6 +1,10 @@
 name: Build and Deploy to Netlify
 on:
   push:
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'netlify.toml'
   pull_request:
     types: [opened, synchronize]
 
