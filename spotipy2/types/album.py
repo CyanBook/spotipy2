@@ -4,7 +4,7 @@ from typing import List
 from spotipy2 import types
 
 
-class Album:
+class Album(types.BaseType):
     def __init__(
         self,
         album_type: str,

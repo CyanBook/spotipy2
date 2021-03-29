@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 
 import spotipy2
-from spotipy2.types import Album, Artist, SimplifiedAlbum, Track
+from spotipy2.types import Artist, SimplifiedAlbum, Track
 
 
 class ArtistMethods:
@@ -37,7 +37,7 @@ class ArtistMethods:
         market: str = None,
         limit: int = None,
         offset: int = None
-    ) -> List[Album]:
+    ) -> List[SimplifiedAlbum]:
         params = self.wrapper(
             include_groups=include_groups,
             market=market,

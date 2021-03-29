@@ -4,12 +4,11 @@ from typing import List
 from spotipy2 import types
 
 
-class SimplifiedAlbum:
+class SimplifiedAlbum(types.BaseType):
     def __init__(
         self,
-        album_group: str,
         album_type: str,
-        artists: List[types.SimplifiedArtist],
+        artists: List[dict],
         available_markets: List[str],
         external_urls,
         href: str,
@@ -20,6 +19,7 @@ class SimplifiedAlbum:
         release_date_precision: str,
         type: str,
         uri: str,
+        album_group: str = None,
         **kwargs
     ):
         self.album_group = album_group

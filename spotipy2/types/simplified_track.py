@@ -1,13 +1,13 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Mapping
 
 from spotipy2 import types
 
 
-class SimplifiedTrack:
+class SimplifiedTrack(types.BaseType):
     def __init__(
         self,
-        artists: List[types.SimplifiedArtist],
+        artists: List[dict],
         available_markets: List[str],
         disc_number: int,
         duration_ms: int,
@@ -43,5 +43,5 @@ class SimplifiedTrack:
         self.uri = uri
 
     @classmethod
-    def from_dict(cls, d: dict) -> SimplifiedTrack:
+    def from_dict(cls, d: Mapping) -> SimplifiedTrack:
         return cls(**d)

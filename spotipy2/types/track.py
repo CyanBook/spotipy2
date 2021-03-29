@@ -1,13 +1,13 @@
 from __future__ import annotations
 from typing import Optional, List
 
-from spotipy2.types import SimplifiedAlbum, SimplifiedArtist
+from spotipy2 import types
 
 
-class Track:
+class Track(types.BaseType):
     def __init__(
         self,
-        artists: List[SimplifiedArtist],
+        artists: List[dict],
         disc_number: int,
         duration_ms: int,
         explicit: bool,
@@ -20,14 +20,14 @@ class Track:
         track_number: int,
         type: str,
         uri: str,
-        album: SimplifiedAlbum = None,
+        album: dict = None,
         external_ids: dict = None,
         popularity: int = None,
         available_markets: Optional[List[str]] = None,
         **kwargs
     ):
-        self.album = SimplifiedAlbum.from_dict(album) if album else None
-        self.artists = [SimplifiedArtist.from_dict(a) for a in artists]
+        self.album = types.SimplifiedAlbum.from_dict(album) if album else None
+        self.artists = [types.SimplifiedArtist.from_dict(a) for a in artists]
         self.available_markets = available_markets
         self.disc_number = disc_number
         self.duration_ms = duration_ms

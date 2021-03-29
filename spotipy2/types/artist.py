@@ -1,8 +1,10 @@
 from __future__ import annotations
 from typing import List
 
+from spotipy2 import types
 
-class Artist:
+
+class Artist(types.BaseType):
     def __init__(
         self,
         external_urls: dict,

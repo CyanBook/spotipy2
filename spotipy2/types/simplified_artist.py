@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from spotipy2 import types
 
-class SimplifiedArtist:
+
+class SimplifiedArtist(types.BaseType):
     def __init__(
         self,
         external_urls: dict,
