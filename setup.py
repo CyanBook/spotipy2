@@ -3,13 +3,16 @@ from setuptools import setup, find_packages
 with open("README.md") as f:
     readme = f.read()
 
+with open("requirements.txt", encoding="utf-8") as r:
+    requires = [i.strip() for i in r]
+    
 setup(
     name="spotipy2",
     version="0.4",
     description="The next generation Spotify Web API wrapper for Python",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/CyanBook/spotipy2",
+    url="https://spotipy2.org/",
     download_url="https://github.com/CyanBook/spotipy2/releases/latest",
     author="CyanBook",
     license="LGPLv3+",
@@ -33,9 +36,10 @@ setup(
     keywords="spotify spotipy api wrapper client library oauth",
     project_urls={
         "Tracker": "https://github.com/CyanBook/spotipy2/issues",
-        "Community": "https://github.com/CyanBook/spotipy2",
-        "Source": "https://t.me/spotipy2"
+        "Community": "https://github.com/CyanBook/spotipy2/discussions",
+        "Source": "https://github.com/CyanBook/spotipy2"
     },
     python_requires="~=3.7",
-    packages=find_packages()
+    packages=find_packages(),
+    install_requires=requires
 )
