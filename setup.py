@@ -1,10 +1,10 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("README.md") as f:
     readme = f.read()
 
-with open("requirements.txt", encoding="utf-8") as r:
-    requires = [i.strip() for i in r]
+with open("requirements.txt", encoding="utf-8") as f:
+    install_requires = f.read().splitlines()
     
 setup(
     name="spotipy2",
@@ -27,19 +27,20 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation",
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Internet",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
-    keywords="spotify spotipy api wrapper client library oauth",
+    keywords="spotify spotipy spotipy2 api wrapper client library oauth",
     project_urls={
         "Tracker": "https://github.com/CyanBook/spotipy2/issues",
         "Community": "https://github.com/CyanBook/spotipy2/discussions",
         "Source": "https://github.com/CyanBook/spotipy2"
     },
     python_requires="~=3.7",
-    packages=find_packages(),
-    install_requires=requires
+    install_requires=install_requires,
 )
