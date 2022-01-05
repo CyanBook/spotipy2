@@ -5,10 +5,10 @@ with open("README.md") as f:
 
 with open("requirements.txt", encoding="utf-8") as f:
     install_requires = f.read().splitlines()
-    
+
 setup(
     name="spotipy2",
-    version="0.4",
+    version="0.5",
     description="The next generation Spotify Web API wrapper for Python",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -43,4 +43,7 @@ setup(
     },
     python_requires="~=3.7",
     install_requires=install_requires,
+    extras_require={
+        "cache": ["pymongo"]
+    }
 )
