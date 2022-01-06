@@ -58,5 +58,5 @@ pip install spotipy2
 ```
 
 ## Copyright & License
-- Copyright (C) 2020-2021 CyanBook <https://github.com/cyanbook>
+- Copyright (C) 2020-2022 CyanBook <https://github.com/cyanbook>
 - Licensed under the terms of the [GNU Lesser General Public License v3 or later (LGPLv3+)](LICENSE)
