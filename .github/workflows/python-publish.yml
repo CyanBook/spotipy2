@@ -5,7 +5,7 @@ name: Upload on PyPi
 
 on:
   release:
-    types: [created, published]
+    types: [published]
 
 jobs:
   deploy:
