@@ -8,7 +8,7 @@ with open("requirements.txt", encoding="utf-8") as f:
 
 setup(
     name="spotipy2",
-    version="0.5",
+    version="0.5.1",
     description="The next generation Spotify Web API wrapper for Python",
     long_description=readme,
     long_description_content_type="text/markdown",
