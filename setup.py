@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md") as f:
     readme = f.read()
@@ -42,6 +42,7 @@ setup(
         "Source": "https://github.com/CyanBook/spotipy2"
     },
     python_requires="~=3.7",
+    packages=find_packages(),
     install_requires=install_requires,
     extras_require={
         "cache": ["pymongo"]
