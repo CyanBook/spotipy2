@@ -4,7 +4,7 @@ from .albums import AlbumMethods
 from .artists import ArtistMethods
 from .search import SearchMethods
 from .tracks import TrackMethods
-from .playlist import PlaylistMethods
+from .playlists import PlaylistMethods
 
 
 class Methods(
