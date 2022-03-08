@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 
 import spotipy2
 from spotipy2.types import Artist, SimplifiedAlbum, Track
@@ -7,7 +7,7 @@ from spotipy2.types import Artist, SimplifiedAlbum, Track
 
 class ArtistMethods:
     async def get_artists(
-        self: spotipy2.Spotify,
+        self: spotipy2.Spotify, # type: ignore
         artist_ids: List[str]
     ) -> List[Artist]:
         artists = await self._get(
@@ -16,13 +16,18 @@ class ArtistMethods:
         )
         return [Artist.from_dict(a) for a in artists["artists"]]
 
-    async def get_artist(self: spotipy2.Spotify, artist_id: str) -> Artist:
+    async def get_artist(
+        self: spotipy2.Spotify, # type: ignore
+        artist_id: str
+    ) -> Artist:
         return Artist.from_dict(
             await self._get(f"artists/{self.get_id(artist_id)}")
         )
 
     async def get_artist_top_tracks(
-        self: spotipy2.Spotify, artist_id: str, market: str
+        self: spotipy2.Spotify, # type: ignore
+        artist_id: str, 
+        market: str
     ) -> List[Track]:
         top_tracks = await self._get(
             f"artists/{self.get_id(artist_id)}/top-tracks",
@@ -31,12 +36,12 @@ class ArtistMethods:
         return [Track.from_dict(track) for track in top_tracks["tracks"]]
 
     async def get_artist_albums(
-        self: spotipy2.Spotify,
+        self: spotipy2.Spotify, # type: ignore
         artist_id: str,
-        include_groups: str = None,
-        market: str = None,
-        limit: int = None,
-        offset: int = None
+        include_groups: Optional[str] = None,
+        market: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None
     ) -> List[SimplifiedAlbum]:
         params = self.wrapper(
             include_groups=include_groups,

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Union, Dict, Type
+from typing import List, Optional, Union, Dict, Type
 
 import spotipy2
 from spotipy2.types import Artist, Album, SimplifiedAlbum, Track
@@ -10,13 +10,13 @@ class SearchMethods:
     TYPES_RETURNED = Union[Artist, SimplifiedAlbum, Track]
 
     async def search(
-        self: spotipy2.Spotify,
+        self: spotipy2.Spotify, # type: ignore
         query: str,
         types: Union[Type[TYPES_SUPPORTED], List[Type[TYPES_SUPPORTED]]],
-        market: str = None,
-        limit: int = None,
-        offset: int = None,
-        include_external: str = None
+        market: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        include_external: Optional[str] = None
     ) -> Union[List[TYPES_RETURNED], Dict[str, TYPES_RETURNED]]:
         params = self.wrapper(
             market=market,

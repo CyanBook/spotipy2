@@ -7,7 +7,7 @@ from spotipy2.types import Album, Track
 
 class AlbumMethods:
     async def get_albums(
-        self: spotipy2.Spotify,
+        self: spotipy2.Spotify, # type: ignore
         album_ids: List[str]
     ) -> List[Album]:
         albums = await self._get(
@@ -16,17 +16,20 @@ class AlbumMethods:
         )
         return [Album.from_dict(a) for a in albums["albums"]]
 
-    async def get_album(self: spotipy2.Spotify, album_id: str) -> Album:
+    async def get_album(
+        self: spotipy2.Spotify, # type: ignore
+        album_id: str
+    ) -> Album:
         return Album.from_dict(
             await self._get(f"albums/{self.get_id(album_id)}")
         )
 
     async def get_album_tracks(
-        self: spotipy2.Spotify,
+        self: spotipy2.Spotify, # type: ignore
         album_id: str,
         market: Optional[str] = None,
-        limit: int = None,
-        offset: int = None
+        limit: Optional[int] = None,
+        offset: Optional[int] = None
     ) -> List[Track]:
         params = self.wrapper(market=market, limit=limit, offset=offset)
 
