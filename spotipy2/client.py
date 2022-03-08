@@ -39,10 +39,8 @@ class Spotify(Methods):
 
             db = MongoClient(db_url + (db_params or ""))
             self.cache = db[db_name].spotipy2
-            self.is_cache = True
         else:
             self.cache = None
-            self.is_cache = False
 
     async def _req(
         self,
@@ -51,7 +49,7 @@ class Spotify(Methods):
         params: Optional[dict] = None,
         can_be_cached: bool = False
     ) -> dict:
-        if self.is_cache and can_be_cached:
+        if self.cache and can_be_cached:
             doc = self.cache.find_one({"_endpoint": endpoint})
             if doc:
                 doc.pop("_endpoint")
@@ -77,7 +75,7 @@ class Spotify(Methods):
                 )
             else:
                 # Cache if possible
-                if self.is_cache and can_be_cached:
+                if self.cache and can_be_cached:
                     asyncio.create_task(
                         self.cache_resource(endpoint, json)
                     )
@@ -86,7 +84,7 @@ class Spotify(Methods):
 
     async def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         # Check if cache is enabled and request is a simple get [resource]
-        can_be_cached = self.is_cache and (
+        can_be_cached = self.cache is None and (
             params is None
             and re.match(
                 r"^(?!me|browse)([\w-]+)\/(\w+)$",
@@ -106,6 +104,9 @@ class Spotify(Methods):
         await self.stop()
 
     async def cache_resource(self, endpoint, value) -> None:
+        if not self.cache:
+            return
+
         try:
             # Insert endpoint for future requests
             value["_endpoint"] = endpoint
