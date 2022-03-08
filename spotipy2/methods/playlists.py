@@ -18,7 +18,7 @@ class PlaylistMethods:
         playlist_id: str,
         market: Optional[str] = None,
         limit: Optional[int] = None,
-        offset: int = 20,
+        offset: Optional[int] = None,
     ) -> List[Track]:
         params = self.wrapper(market=market, limit=limit, offset=offset)
 
