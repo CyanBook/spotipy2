@@ -33,18 +33,16 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Internet",
         "Topic :: Software Development :: Libraries",
-        "Topic :: Software Development :: Libraries :: Python Modules"
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords="spotify spotipy spotipy2 api wrapper client library oauth",
     project_urls={
         "Tracker": "https://github.com/CyanBook/spotipy2/issues",
         "Community": "https://github.com/CyanBook/spotipy2/discussions",
-        "Source": "https://github.com/CyanBook/spotipy2"
+        "Source": "https://github.com/CyanBook/spotipy2",
     },
     python_requires="~=3.7",
     packages=find_packages(),
     install_requires=install_requires,
-    extras_require={
-        "cache": ["pymongo"]
-    }
+    extras_require={"cache": ["pymongo"]},
 )

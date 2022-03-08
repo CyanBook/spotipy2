@@ -7,7 +7,9 @@ from .tracks import TrackMethods
 from .playlist import PlaylistMethods
 
 
-class Methods(AlbumMethods, ArtistMethods, SearchMethods, TrackMethods, PlaylistMethods):
+class Methods(
+    AlbumMethods, ArtistMethods, SearchMethods, TrackMethods, PlaylistMethods
+):
     @staticmethod
     def get_id(s: str) -> str:
         if m := re.search("(?!.*/).+", s):

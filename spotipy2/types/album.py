@@ -26,7 +26,7 @@ class Album(types.BaseType):
         tracks,
         type: str,
         uri: str,
-        **kwargs
+        **kwargs,
     ):
         self.album_type = album_type
         self.artists = artists

@@ -21,7 +21,7 @@ class Playlist(types.BaseType):
         tracks,
         type: str,
         uri: str,
-        **kwargs
+        **kwargs,
     ):
         self.collaborative = collaborative
         self.description = description

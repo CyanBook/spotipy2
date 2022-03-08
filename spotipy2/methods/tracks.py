@@ -7,19 +7,12 @@ from spotipy2.types import Track
 
 class TrackMethods:
     async def get_tracks(
-        self: spotipy2.Spotify, # type: ignore
-        track_ids: List[str]
+        self: spotipy2.Spotify, track_ids: List[str]  # type: ignore
     ) -> List[Track]:
         tracks = await self._get(
-            "tracks",
-            params={"ids": ",".join([self.get_id(i) for i in track_ids])}
+            "tracks", params={"ids": ",".join([self.get_id(i) for i in track_ids])}
         )
         return [Track.from_dict(track) for track in tracks["tracks"]]
 
-    async def get_track(
-        self: spotipy2.Spotify, # type: ignore 
-        track_id: str
-    ) -> Track:
-        return Track.from_dict(
-            await self._get(f"tracks/{self.get_id(track_id)}")
-        )
+    async def get_track(self: spotipy2.Spotify, track_id: str) -> Track:  # type: ignore
+        return Track.from_dict(await self._get(f"tracks/{self.get_id(track_id)}"))

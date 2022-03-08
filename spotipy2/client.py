@@ -19,7 +19,7 @@ class Spotify(Methods):
         auth_flow: ClientCredentialsFlow,
         mongodb_uri: Optional[str] = None,
         *args,
-        **kwargs
+        **kwargs,
     ) -> None:
         self.auth_flow = auth_flow
         self.http = ClientSession(*args, **kwargs)
@@ -27,10 +27,7 @@ class Spotify(Methods):
         if mongodb_uri:
             from pymongo import MongoClient
 
-            match = re.match(
-                r"(mongodb:\/\/\S+\/)(\w+)(\?\S+)?",
-                mongodb_uri
-            )
+            match = re.match(r"(mongodb:\/\/\S+\/)(\w+)(\?\S+)?", mongodb_uri)
 
             if match:
                 db_url, db_name, db_params = match.groups()
@@ -47,7 +44,7 @@ class Spotify(Methods):
         method: str,
         endpoint: str,
         params: Optional[dict] = None,
-        can_be_cached: bool = False
+        can_be_cached: bool = False,
     ) -> dict:
         if self.cache and can_be_cached:
             doc = self.cache.find_one({"_endpoint": endpoint})
@@ -59,10 +56,7 @@ class Spotify(Methods):
         headers = {"Authorization": f"Bearer {token.access_token}"}
 
         async with self.http.request(
-            method,
-            f"{self.API_URL}{endpoint}",
-            params=params,
-            headers=headers
+            method, f"{self.API_URL}{endpoint}", params=params, headers=headers
         ) as r:
             json = await r.json()
 
@@ -70,15 +64,12 @@ class Spotify(Methods):
                 assert r.status == 200
             except AssertionError:
                 raise SpotifyException(
-                    json["error"]["status"],
-                    json["error"]["message"]
+                    json["error"]["status"], json["error"]["message"]
                 )
             else:
                 # Cache if possible
                 if self.cache and can_be_cached:
-                    asyncio.create_task(
-                        self.cache_resource(endpoint, json)
-                    )
+                    asyncio.create_task(self.cache_resource(endpoint, json))
 
                 return json
 
@@ -86,10 +77,7 @@ class Spotify(Methods):
         # Check if cache is enabled and request is a simple get [resource]
         can_be_cached = self.cache is None and (
             params is None
-            and re.match(
-                r"^(?!me|browse)([\w-]+)\/(\w+)$",
-                endpoint
-            ) is not None
+            and re.match(r"^(?!me|browse)([\w-]+)\/(\w+)$", endpoint) is not None
         )
 
         return await self._req("GET", endpoint, params, can_be_cached)

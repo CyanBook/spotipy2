@@ -15,5 +15,5 @@ __all__ = [
     "SimplifiedArtist",
     "SimplifiedTrack",
     "Track",
-    "Playlist"
+    "Playlist",
 ]

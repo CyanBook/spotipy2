@@ -17,7 +17,7 @@ class Artist(types.BaseType):
         popularity: int,
         type: str,
         uri: str,
-        **kwargs
+        **kwargs,
     ):
         self.external_urls = external_urls
         self.followers = followers

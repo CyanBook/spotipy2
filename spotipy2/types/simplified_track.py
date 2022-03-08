@@ -23,7 +23,7 @@ class SimplifiedTrack(types.BaseType):
         restrictions,
         track_number: int,
         uri: str,
-        **kwargs
+        **kwargs,
     ):
         self.artists = [types.SimplifiedArtist.from_dict(a) for a in artists]
         self.available_markets = available_markets

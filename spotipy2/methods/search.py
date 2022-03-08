@@ -10,35 +10,30 @@ class SearchMethods:
     TYPES_RETURNED = Union[Artist, SimplifiedAlbum, Track]
 
     async def search(
-        self: spotipy2.Spotify, # type: ignore
+        self: spotipy2.Spotify,  # type: ignore
         query: str,
         types: Union[Type[TYPES_SUPPORTED], List[Type[TYPES_SUPPORTED]]],
         market: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        include_external: Optional[str] = None
+        include_external: Optional[str] = None,
     ) -> Union[List[TYPES_RETURNED], Dict[str, TYPES_RETURNED]]:
         params = self.wrapper(
-            market=market,
-            limit=limit,
-            offset=offset,
-            include_external=include_external
+            market=market, limit=limit, offset=offset, include_external=include_external
         )
 
         unique_types = set()
-        for t in ([types] if not isinstance(types, list) else types):
+        for t in [types] if not isinstance(types, list) else types:
             unique_types.add(
-                t.__name__.lower() if not isinstance(
-                    t, SimplifiedAlbum
-                ) else "album"
+                t.__name__.lower() if not isinstance(t, SimplifiedAlbum) else "album"
             )
 
         items = await self._get(
             "search",
             params={
-                **{"query": query, "type": ','.join(t for t in unique_types)},
-                **params
-            }
+                **{"query": query, "type": ",".join(t for t in unique_types)},
+                **params,
+            },
         )
 
         results = {} if len(unique_types) > 1 else []

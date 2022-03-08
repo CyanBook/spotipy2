@@ -24,7 +24,7 @@ class Track(types.BaseType):
         external_ids: Optional[dict] = None,
         popularity: Optional[int] = None,
         available_markets: Optional[List[str]] = None,
-        **kwargs
+        **kwargs,
     ):
         self.album = types.SimplifiedAlbum.from_dict(album) if album else None
         self.artists = [types.SimplifiedArtist.from_dict(a) for a in artists]

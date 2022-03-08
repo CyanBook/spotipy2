@@ -20,7 +20,7 @@ class SimplifiedAlbum(types.BaseType):
         type: str,
         uri: str,
         album_group: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ):
         self.album_group = album_group
         self.album_type = album_type

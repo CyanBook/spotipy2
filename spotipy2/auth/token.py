@@ -11,7 +11,7 @@ class Token:
         scopes: Optional[List[str]],
         expires_in: int,
         expires_at: datetime,
-        refresh_token: Optional[str] = None
+        refresh_token: Optional[str] = None,
     ) -> None:
         self.access_token = access_token
         self.token_type = token_type
@@ -22,9 +22,7 @@ class Token:
 
     @classmethod
     async def from_dict(cls, d: dict) -> Token:
-        expires_at = datetime.now(
-            timezone.utc
-        ) + timedelta(seconds=d["expires_in"])
+        expires_at = datetime.now(timezone.utc) + timedelta(seconds=d["expires_in"])
 
         return cls(
             access_token=d["access_token"],
@@ -32,5 +30,5 @@ class Token:
             scopes=d.get("scope", "").split() or None,
             expires_in=d["expires_in"],
             expires_at=expires_at,
-            refresh_token=d.get("refresh_token")
+            refresh_token=d.get("refresh_token"),
         )
