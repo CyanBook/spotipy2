@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 
 from spotipy2 import types
 
@@ -19,8 +19,8 @@ class SimplifiedAlbum(types.BaseType):
         release_date_precision: str,
         type: str,
         uri: str,
-        album_group: str = None,
-        **kwargs
+        album_group: Optional[str] = None,
+        **kwargs,
     ):
         self.album_group = album_group
         self.album_type = album_type

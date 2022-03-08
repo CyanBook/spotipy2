@@ -9,10 +9,7 @@ from .token import Token
 
 class ClientCredentialsFlow(BaseAuthFlow):
     def __init__(
-        self,
-        client_id: str,
-        client_secret: str,
-        token: Optional[Token] = None
+        self, client_id: str, client_secret: str, token: Optional[Token] = None
     ) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
@@ -26,15 +23,12 @@ class ClientCredentialsFlow(BaseAuthFlow):
             return self.token
 
         async with http.post(
-            API_URL,
-            data=GRANT_TYPE,
-            headers=await self.make_auth_header()
+            API_URL, data=GRANT_TYPE, headers=await self.make_auth_header()
         ) as r:
             return await Token.from_dict(await r.json())
 
     async def make_auth_header(self) -> dict:
         return {
-            "Authorization": "Basic %s" % b64encode(
-                f"{self.client_id}:{self.client_secret}".encode()
-            ).decode()
+            "Authorization": "Basic %s"
+            % b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()
         }

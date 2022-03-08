@@ -20,11 +20,11 @@ class Track(types.BaseType):
         track_number: int,
         type: str,
         uri: str,
-        album: dict = None,
-        external_ids: dict = None,
-        popularity: int = None,
+        album: Optional[dict] = None,
+        external_ids: Optional[dict] = None,
+        popularity: Optional[int] = None,
         available_markets: Optional[List[str]] = None,
-        **kwargs
+        **kwargs,
     ):
         self.album = types.SimplifiedAlbum.from_dict(album) if album else None
         self.artists = [types.SimplifiedArtist.from_dict(a) for a in artists]

@@ -9,7 +9,6 @@ class SpotifyException(Exception):
         self.message = message
 
     def __repr__(self) -> str:
-        return "<SpotifyException(status={0}, message=\"{1}\")>".format(
-            self.status,
-            self.message
+        return '<SpotifyException(status={0}, message="{1}")>'.format(
+            self.status, self.message
         )

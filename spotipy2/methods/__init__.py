@@ -4,9 +4,12 @@ from .albums import AlbumMethods
 from .artists import ArtistMethods
 from .search import SearchMethods
 from .tracks import TrackMethods
+from .playlists import PlaylistMethods
 
 
-class Methods(AlbumMethods, ArtistMethods, SearchMethods, TrackMethods):
+class Methods(
+    AlbumMethods, ArtistMethods, SearchMethods, TrackMethods, PlaylistMethods
+):
     @staticmethod
     def get_id(s: str) -> str:
         if m := re.search("(?!.*/).+", s):

@@ -12,7 +12,7 @@ class SimplifiedArtist(types.BaseType):
         name: str,
         type: str,
         uri: str,
-        **kwargs
+        **kwargs,
     ):
         self.external_urls = external_urls
         self.href = href
