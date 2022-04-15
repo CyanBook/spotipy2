@@ -43,7 +43,7 @@ class OauthFlow(BaseAuthFlow):
         full list: https://developer.spotify.com/documentation/general/guides/authorization/scopes/
         - show_dialog: `Optional[bool]`, Whether to force the user to approve the app again if they have already done so
         - open_browser: `Optional[bool]`, Whether to open the browser or not when get_redirect is called
-        - token: `Optional[str]`, length of the song in seconds
+        - token: `Optional[str]`, The access token
         - authenticated_html_response: `Optional[str]`, The path to a html file which will be displayed if a user is
         successfully authenticated, only works when using spotipy2's built-in server
         - failed_html_response: `Optional[str]`, The path to a html file which will be displayed if a user is
