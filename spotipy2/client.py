@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import Optional, Type
+from typing import Optional, Union
 
 import re
 import logging
 import asyncio
 from aiohttp import ClientSession
 
-from spotipy2.auth import BaseAuthFlow
+from spotipy2.auth import ClientCredentialsFlow, OauthFlow
 from spotipy2.methods import Methods
 from spotipy2.exceptions import SpotifyException
 
@@ -16,7 +16,7 @@ class Spotify(Methods):
 
     def __init__(
         self,
-        auth_flow: Type[BaseAuthFlow],
+        auth_flow: Union[ClientCredentialsFlow, OauthFlow],
         mongodb_uri: Optional[str] = None,
         *args,
         **kwargs,
