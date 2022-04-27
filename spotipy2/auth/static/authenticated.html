@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotipy2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="w-screen h-screen bg-gray-50 flex items-center justify-center">
+    <div class="p-2 h-3/4 bg-white shadow-2xl rounded-lg">
+        <img src="https://camo.githubusercontent.com/3eec18b07d910260886735800984c2fcce1fa419b11d529e1b1e38e9cda86205/68747470733a2f2f73766773686172652e636f6d2f692f5354432e737667"
+             alt="Spotipy2 Logo"
+             class="h-28"
+        />
+        <div class="flex items-center justify-center flex-col" style="height: inherit;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 stroke-green-500" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor"
+                 stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p class="text-xl font-bold">Authorized Successfully!</p>
+            <p class="font-thin">You can close this tab now</p>
+        </div>
+        <p class="font-thin text-center">Made with love using Spotipy2</p>
+    </div>
+    <p id="state" class="p-2 absolute bottom-0 left-0">State: </p>
+</div>
+
+<script>
+    const url = new URL(window.location.href);
+    document.getElementById("state").appendChild(document.createTextNode(url.searchParams.get("state")));
+</script>
+</body>
+</html>

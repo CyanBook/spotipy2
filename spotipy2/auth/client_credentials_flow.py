@@ -1,5 +1,4 @@
 from typing import Optional
-from base64 import b64encode
 from aiohttp import ClientSession
 from datetime import datetime, timezone
 
@@ -26,9 +25,3 @@ class ClientCredentialsFlow(BaseAuthFlow):
             API_URL, data=GRANT_TYPE, headers=await self.make_auth_header()
         ) as r:
             return await Token.from_dict(await r.json())
-
-    async def make_auth_header(self) -> dict:
-        return {
-            "Authorization": "Basic %s"
-            % b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()
-        }

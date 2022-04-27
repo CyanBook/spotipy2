@@ -48,4 +48,4 @@ class PlaylistMethods:
             offset += len(playlist_tracks["items"])
 
             if not playlist_tracks["next"]:
-                return None
+                return
