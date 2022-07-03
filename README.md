@@ -24,14 +24,14 @@ import asyncio
 from spotipy2 import Spotify
 from spotipy2.auth import ClientCredentialsFlow
 
-client = Spotify(
-    ClientCredentialsFlow(
-        client_id="client_id",
-        client_secret="client_secret"
-    )
-)
-
 async def get_track_name(track_id):
+    client = Spotify(
+        ClientCredentialsFlow(
+            client_id="client_id",
+            client_secret="client_secret"
+        )
+    )
+
     async with client as s:
         track = await s.get_track(track_id)
         print(f"The name of the track is {track.name}")
