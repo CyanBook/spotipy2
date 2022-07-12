@@ -21,16 +21,16 @@ class OauthFlow(BaseAuthFlow):
             client_id: str,
             client_secret: str,
             redirect_uri: str,
+            # `scope` and `show_dialog` are None on purpose so that
+            # the wrapper method removes them if not given
             scope: Optional[List[str]] = None,
-            open_browser: Optional[bool] = False,
-            # This is None on purpose so that the wrapper method removes this if not given
             show_dialog: Optional[bool] = None,
             token: Optional[Token] = None,
+            open_browser: bool = False,
+            disable_builtin_server: bool = False,
             authenticated_html_response: Optional[str] = Path(__file__).parent / "./static/authenticated.html",
-            # See ^1 (below)
             failed_html_response: Optional[str] = Path(__file__).parent / "./static/failed.html",
-            state_verifier: Optional[Callable[[str], bool]] = None,
-            disable_builtin_server: Optional[bool] = False,
+            state_verifier: Optional[Callable[[str], bool]] = None
     ) -> None:
         """
         ### Args
@@ -42,14 +42,14 @@ class OauthFlow(BaseAuthFlow):
         - scope: `Optional[List[str]]`, List of Spotify scopes,
         full list: https://developer.spotify.com/documentation/general/guides/authorization/scopes/
         - show_dialog: `Optional[bool]`, Whether to force the user to approve the app again if they have already done so
-        - open_browser: `Optional[bool]`, Whether to open the browser or not when get_redirect is called
         - token: `Optional[str]`, The access token
+        - open_browser: `bool`, Whether to open the browser or not when get_redirect is called
+        - disable_builtin_server: `bool`, If True, the built-in server will not be started
         - authenticated_html_response: `Optional[str]`, The path to a html file which will be displayed if a user is
         successfully authenticated, only works when using spotipy2's built-in server
         - failed_html_response: `Optional[str]`, The path to a html file which will be displayed if a user is
         NOT successfully authenticated, only works when using spotipy2's built-in server
-        - state_verifier: `Optional[Callable[[str], bool]]`, Method to be executed to verify state to prevent XSS attack
-        - disable_builtin_server: `Optional[bool]`, If True, the built-in server will not be started
+        - state_verifier: `Optional[Callable[[str], bool]]`, Method to be executed to verify state to prevent XSS attack. 
 
         ### Returns
         - `None`
@@ -66,25 +66,21 @@ class OauthFlow(BaseAuthFlow):
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
-        self.scope = scope
-        self.open_browser = open_browser
-        self.show_dialog = show_dialog if show_dialog else str(show_dialog).lower()
+        self.scope = " ".join(scope) if scope else None
+        self.show_dialog = str(show_dialog).lower() if show_dialog is not None else None
+
         self.token = token
+        self.open_browser = open_browser
         self.authenticated_html_response = authenticated_html_response
         self.failed_html_response = failed_html_response
         self.disable_builtin_server = disable_builtin_server
-        self.header = {
-            "Authorization": "Basic %s"
-                             % b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()
-        }
+        self.header = self.make_auth_header()
 
         self.state_verifier = state_verifier if state_verifier else self._state_verifier
-
         self.expected_state = secrets.token_urlsafe(16)
 
         self.server = None  # Oauth server
         self.server_runner = None
-
         self.timeout = 3
 
     async def get_redirect(self) -> str:
@@ -104,15 +100,16 @@ class OauthFlow(BaseAuthFlow):
         """
         API_URL = "https://accounts.spotify.com/authorize?"
 
-        data = await self.wrapper(
+        data = self.wrapper(
             response_type="code",
             client_id=self.client_id,
-            scope=" ".join(self.scope),
+            scope=self.scope,
             redirect_uri=self.redirect_uri,
             show_dialog=self.show_dialog,
             state=self.expected_state,
         )
 
+        final_url = API_URL + urllib.parse.urlencode(data)
         self.redirect_uri = self.redirect_uri.replace("https://", "http://")
 
         regex = '(?:http.*://)?(?P<host>[^:/ ]+).?(?P<port>[0-9]*).*'
@@ -128,11 +125,11 @@ class OauthFlow(BaseAuthFlow):
                 # We don't need to implement any code for graceful shutdown as we don't do anything such as data
                 # streaming
                 await self.server_runner.start()
-
+        
         if self.open_browser:
-            webbrowser.open_new(API_URL + urllib.parse.urlencode(data))
+            webbrowser.open_new(final_url)
 
-        return API_URL + urllib.parse.urlencode(data)
+        return final_url
 
     async def get_access_token(self, http: ClientSession) -> Token:
         """

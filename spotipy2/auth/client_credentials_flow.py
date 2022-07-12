@@ -22,6 +22,6 @@ class ClientCredentialsFlow(BaseAuthFlow):
             return self.token
 
         async with http.post(
-            API_URL, data=GRANT_TYPE, headers=await self.make_auth_header()
+            API_URL, data=GRANT_TYPE, headers=self.make_auth_header()
         ) as r:
             return await Token.from_dict(await r.json())
