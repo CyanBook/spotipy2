@@ -2,7 +2,8 @@ from __future__ import annotations
 from typing import List, Optional
 
 import spotipy2
-from spotipy2.types import Album, Track
+from spotipy2.types import Album
+from spotipy2.types.paging import Paging
 
 
 class AlbumMethods:
@@ -12,10 +13,10 @@ class AlbumMethods:
         albums = await self._get(
             "albums", params={"ids": ",".join([self.get_id(i) for i in album_ids])}
         )
-        return [Album.from_dict(a) for a in albums["albums"]]
+        return albums["albums"]
 
     async def get_album(self: spotipy2.Spotify, album_id: str) -> Album:  # type: ignore
-        return Album.from_dict(await self._get(f"albums/{self.get_id(album_id)}"))
+        return await self._get(f"albums/{self.get_id(album_id)}")
 
     async def get_album_tracks(
         self: spotipy2.Spotify,  # type: ignore
@@ -23,10 +24,10 @@ class AlbumMethods:
         market: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-    ) -> List[Track]:
+    ) -> Paging:
         params = self.wrapper(market=market, limit=limit, offset=offset)
 
         album_tracks = await self._get(
             f"albums/{self.get_id(album_id)}/tracks", params=params
         )
-        return [Track.from_dict(track) for track in album_tracks["items"]]
+        return album_tracks

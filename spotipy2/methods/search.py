@@ -1,56 +1,32 @@
 from __future__ import annotations
-from typing import List, Optional, Union, Dict, Type
+from typing import List, Optional, Union, Dict
 
 import spotipy2
-from spotipy2.types import Artist, Album, SimplifiedAlbum, Track
+from spotipy2.types import Paging, Album, Artist, Playlist, Track
 
 
 class SearchMethods:
-    TYPES_SUPPORTED = Union[Artist, Album, Track]
-    TYPES_RETURNED = Union[Artist, SimplifiedAlbum, Track]
+    TYPES_SUPPORTED = [Album, Artist, Playlist, Track]
 
     async def search(
         self: spotipy2.Spotify,  # type: ignore
         query: str,
-        types: Union[Type[TYPES_SUPPORTED], List[Type[TYPES_SUPPORTED]]],
+        types: Union[TYPES_SUPPORTED, List[TYPES_SUPPORTED]],
         market: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         include_external: Optional[str] = None,
-    ) -> Union[List[TYPES_RETURNED], Dict[str, TYPES_RETURNED]]:
+    ) -> Union[Paging, Dict[Paging]]:
+        types = types if isinstance(types, list) else [types]
+
         params = self.wrapper(
             market=market, limit=limit, offset=offset, include_external=include_external
         )
 
-        unique_types = set()
-        for t in [types] if not isinstance(types, list) else types:
-            unique_types.add(
-                t.__name__.lower() if not isinstance(t, SimplifiedAlbum) else "album"
-            )
-
-        items = await self._get(
+        return await self._get(
             "search",
             params={
-                **{"query": query, "type": ",".join(t for t in unique_types)},
+                **{"query": query, "type": ",".join(t.__name__.lower() for t in types)},
                 **params,
             },
         )
-
-        results = {} if len(unique_types) > 1 else []
-        for k, v in items.items():
-            if k == "artists":
-                c = Artist
-            elif k == "albums":
-                c = SimplifiedAlbum
-            elif k == "tracks":
-                c = Track
-            else:
-                raise ValueError("No class valid")
-
-            tr = [c.from_dict(i) for i in v["items"]]
-            if len(unique_types) > 1:
-                results[k] = tr
-            else:
-                results = tr
-
-        return results

@@ -1,49 +1,33 @@
 from __future__ import annotations
 from typing import Optional, List
+from dataclasses import dataclass, field
 
 from spotipy2 import types
 
 
+@dataclass
 class Track(types.BaseType):
-    def __init__(
-        self,
-        artists: List[dict],
-        disc_number: int,
-        duration_ms: int,
-        explicit: bool,
-        external_urls,
-        href: str,
-        id: str,
-        is_local: bool,
-        name: str,
-        preview_url: str,
-        track_number: int,
-        type: str,
-        uri: str,
-        album: Optional[dict] = None,
-        external_ids: Optional[dict] = None,
-        popularity: Optional[int] = None,
-        available_markets: Optional[List[str]] = None,
-        **kwargs,
-    ):
-        self.album = types.SimplifiedAlbum.from_dict(album) if album else None
-        self.artists = [types.SimplifiedArtist.from_dict(a) for a in artists]
-        self.available_markets = available_markets
-        self.disc_number = disc_number
-        self.duration_ms = duration_ms
-        self.explicit = explicit
-        self.external_ids = external_ids
-        self.external_urls = external_urls
-        self.href = href
-        self.id = id
-        self.is_local = is_local
-        self.name = name
-        self.popularity = popularity
-        self.preview_url = preview_url
-        self.track_number = track_number
-        self.type = type
-        self.uri = uri
+    artists: List[types.SimplifiedArtist]
+    disc_number: int
+    duration_ms: int
+    explicit: bool
+    external_urls: dict
+    href: str
+    id: str
+    is_local: bool
+    name: str
+    track_number: int
+    uri: str
 
-    @classmethod
-    def from_dict(cls, d: dict) -> Track:
-        return cls(**d)
+    album: Optional[types.SimplifiedAlbum] = field(default=None)
+    external_ids: Optional[dict] = field(default=None)
+    popularity: Optional[int] = field(default=None)
+    is_playable: Optional[bool] = field(default=None)
+    preview_url: Optional[str] = field(default=None)
+    available_markets: Optional[List[str]] = field(default=None)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"Track(name='{self.name}', id='{self.id}')"
