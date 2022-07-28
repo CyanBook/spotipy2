@@ -1,35 +1,25 @@
 from __future__ import annotations
 from typing import List
+from dataclasses import dataclass, field
 
 from spotipy2 import types
 
 
+@dataclass
 class Artist(types.BaseType):
-    def __init__(
-        self,
-        external_urls: dict,
-        followers: dict,
-        genres: List[str],
-        href: str,
-        id: str,
-        images: List[dict],
-        name: str,
-        popularity: int,
-        type: str,
-        uri: str,
-        **kwargs,
-    ):
-        self.external_urls = external_urls
-        self.followers = followers
-        self.genres = genres
-        self.href = href
-        self.id = id
-        self.images = images
-        self.name = name
-        self.popularity = popularity
-        self.type = type
-        self.uri = uri
+    external_urls: dict
+    href: str
+    id: str
+    name: str
+    uri: str
 
-    @classmethod
-    def from_dict(cls, d: dict) -> Artist:
-        return cls(**d)
+    followers: dict = field(default=None)
+    genres: List[str] = field(default=None)
+    images: List[dict] = field(default=None)
+    popularity: int = field(default=None)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"Artist(name='{self.name}', id='{self.id}')"

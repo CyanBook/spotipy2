@@ -1,53 +1,34 @@
 from __future__ import annotations
-from typing import List
+from typing import Optional, List
+from dataclasses import dataclass, field
 
 from spotipy2 import types
 
 
+@dataclass
 class Album(types.BaseType):
-    def __init__(
-        self,
-        album_type: str,
-        artists: List[types.Artist],
-        available_markets: List[str],
-        copyrights,
-        external_ids,
-        external_urls,
-        genres: List[str],
-        href: str,
-        id: str,
-        images: List[dict],
-        label: str,
-        name: str,
-        popularity: int,
-        release_date: str,
-        release_date_precision: str,
-        restrictions,
-        tracks,
-        type: str,
-        uri: str,
-        **kwargs,
-    ):
-        self.album_type = album_type
-        self.artists = artists
-        self.available_markets = available_markets
-        self.copyrights = copyrights
-        self.external_ids = external_ids
-        self.external_urls = external_urls
-        self.genres = genres
-        self.href = href
-        self.id = id
-        self.images = images
-        self.label = label
-        self.name = name
-        self.popularity = popularity
-        self.release_date = release_date
-        self.release_date_precision = release_date_precision
-        self.restrictions = restrictions
-        self.tracks = tracks
-        self.type = type
-        self.uri = uri
+    album_type: str
+    total_tracks: int
+    artists: List[types.Artist]
+    external_urls: dict
+    href: str
+    id: str
+    images: List[dict]
+    name: str
+    release_date: str
+    release_date_precision: str
+    uri: str
 
-    @classmethod
-    def from_dict(cls, d: dict) -> Album:
-        return cls(**d)
+    available_markets: Optional[List[str]] = field(default=None)
+    copyrights: List[dict] = field(default=None)
+    external_ids: dict = field(default=None)
+    genres: List[str] = field(default=None)
+    label: str = field(default=None)
+    popularity: int = field(default=None)
+    tracks: List[types.Track] = field(default=None)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"Album(name='{self.name}', id='{self.id}')"

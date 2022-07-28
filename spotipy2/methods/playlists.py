@@ -1,51 +1,50 @@
 from __future__ import annotations
-from typing import AsyncGenerator, List, Optional
+from typing import AsyncGenerator, Optional
 
 import spotipy2
-from spotipy2.types import Playlist, Track
+from spotipy2.types import Playlist, Paging, PlaylistItem
 
 
 class PlaylistMethods:
     async def get_playlist(
         self: spotipy2.Spotify, playlist_id: str  # type: ignore
     ) -> Playlist:
-        return Playlist.from_dict(
-            await self._get(f"playlists/{self.get_id(playlist_id)}")
-        )
+        return await self._get(f"playlists/{self.get_id(playlist_id)}")
 
     async def get_playlist_tracks(
-        self: spotipy2.Spotify, # type: ignore
+        self: spotipy2.Spotify,  # type: ignore
         playlist_id: str,
         market: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-    ) -> List[Track]:
+    ) -> Paging:
         params = self.wrapper(market=market, limit=limit, offset=offset)
 
         playlist_tracks = await self._get(
             f"playlists/{self.get_id(playlist_id)}/tracks", params=params
         )
 
-        return [Track.from_dict(track["track"]) for track in playlist_tracks["items"]]
+        return playlist_tracks
 
     async def iter_playlist_tracks(
-        self: spotipy2.Spotify, # type: ignore
+        self: spotipy2.Spotify,  # type: ignore
         playlist_id: str,
         market: Optional[str] = None,
         limit: Optional[int] = None,
         offset: int = 0,
-    ) -> AsyncGenerator[Track, None]:
+    ) -> AsyncGenerator[PlaylistItem]:
         while True:
-            params = self.wrapper(market=market, limit=limit, offset=offset)
-
-            playlist_tracks = await self._get(
-                f"playlists/{self.get_id(playlist_id)}/tracks", params=params
+            playlist_tracks = await self.get_playlist_tracks(
+                playlist_id,
+                market=market,
+                limit=limit,
+                offset=offset
             )
 
-            for track in playlist_tracks["items"]:
-                yield Track.from_dict(track["track"])
+            for track in playlist_tracks.items:
+                yield track
 
-            offset += len(playlist_tracks["items"])
+            offset += len(playlist_tracks.items)
 
-            if not playlist_tracks["next"]:
-                return
+            if not playlist_tracks.next:
+                break

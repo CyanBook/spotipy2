@@ -1,11 +1,13 @@
 from __future__ import annotations
-from typing import Optional, Union
+from typing import Optional, Union, Type
 
 import re
 import logging
 import asyncio
+import inspect
 from aiohttp import ClientSession
 
+import spotipy2.types as types
 from spotipy2.auth import ClientCredentialsFlow, OauthFlow
 from spotipy2.methods import Methods
 from spotipy2.exceptions import SpotifyException
@@ -18,11 +20,15 @@ class Spotify(Methods):
         self,
         auth_flow: Union[ClientCredentialsFlow, OauthFlow],
         mongodb_uri: Optional[str] = None,
+        auto_conversion: bool = True,
+        recursive_conversion: bool = True,
         *args,
         **kwargs,
     ) -> None:
         self.auth_flow = auth_flow
         self.http = ClientSession(*args, **kwargs)
+        self.auto_conversion = auto_conversion
+        self.recursive_conversion = recursive_conversion
 
         if mongodb_uri:
             from pymongo import MongoClient
@@ -46,11 +52,15 @@ class Spotify(Methods):
         params: Optional[dict] = None,
         can_be_cached: bool = False,
     ) -> dict:
-        if self.cache and can_be_cached:
+        cache_enabled = self.cache is not None and can_be_cached
+
+        # Get cached element
+        if cache_enabled:
             doc = self.cache.find_one({"_endpoint": endpoint})
             if doc:
                 doc.pop("_endpoint")
-                return doc
+                doc.pop("_id")
+                return self.convert(doc) if self.auto_conversion else doc
 
         token = await self.auth_flow.get_access_token(self.http)
         headers = {"Authorization": f"Bearer {token.access_token}"}
@@ -67,15 +77,15 @@ class Spotify(Methods):
                     json["error"]["status"], json["error"]["message"]
                 )
             else:
-                # Cache if possible
-                if self.cache and can_be_cached:
+                # Save in cache if enabled
+                if cache_enabled:
                     asyncio.create_task(self.cache_resource(endpoint, json))
 
-                return json
+                return self.convert(json) if self.auto_conversion else json
 
     async def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         # Check if cache is enabled and request is a simple get [resource]
-        can_be_cached = self.cache is None and (
+        can_be_cached = self.cache is not None and (
             params is None
             and re.match(r"^(?!me|browse)([\w-]+)\/(\w+)$", endpoint) is not None
         )
@@ -92,12 +102,71 @@ class Spotify(Methods):
         await self.stop()
 
     async def cache_resource(self, endpoint, value) -> None:
-        if not self.cache:
-            return
-
         try:
             # Insert endpoint for future requests
             value["_endpoint"] = endpoint
             self.cache.insert_one(value)
         except Exception as e:
             logging.warning(f"Can't insert cached object: {e}")
+
+    def convert(self, json: str, recursive: Optional[bool] = None):
+        if recursive is None:
+            recursive = self.recursive_conversion
+
+        # Find and convert sub-items (recursive by default)
+        if recursive:
+            list_args = json.items() if isinstance(json, dict) else enumerate(json)
+            convertible_args = {
+                k: v for k, v in list_args if self._valid_to_convert(v)
+            }
+
+            converted_args = {
+                k: (
+                    (
+                        self.convert(v)
+                        if isinstance(v, dict) else
+                        [self.convert(x) for x in v]
+                    )
+                ) for k, v in convertible_args.items()
+            }
+
+            # Merge with main JSON
+            json = {**json, **converted_args}
+
+        # Convert the main item, if possible
+        spo_class = self._find_matching_class(json)
+
+        if spo_class:
+            return spo_class.from_dict(json)
+
+        return json
+
+    def _valid_to_convert(self, arg: Union[dict, list]) -> bool:
+        if isinstance(arg, dict):
+            return (
+                arg.get("type") in types.SPOTIFY
+                or arg.get("items")
+                or self._find_matching_class(arg)
+            )
+        elif isinstance(arg, list):
+            return all(self._valid_to_convert(v) for v in arg)
+        else:
+            return False
+
+    def _find_matching_class(self, json: str) -> Optional[Type[types.BaseType]]:
+        # Find matching class if possible, else try brute-forcing it
+        spotify_json_type = json.get("type")
+        if spotify_json_type in types.SPOTIFY.keys():
+            possible_classes = [types.SPOTIFY.get(spotify_json_type)]
+        else:
+            possible_classes = [
+                eval(f"types.{spo_class}") for spo_class in types.__all__[1:]
+            ]
+
+        # For each class, find if all JSON keys are in the class parameters
+        for possible_class in possible_classes:
+            class_args = inspect.signature(possible_class).parameters.items()
+            if all(k in json or v.default is None for k, v in class_args):
+                return possible_class
+        else:
+            return None
