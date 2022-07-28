@@ -39,24 +39,18 @@ async def get_track_name(track_id):
 asyncio.run(get_track_name(input("Insert the track ID: ")))
 ```
 
-### Features
-Well, Spotipy2 has some big advantages over Spotipy.
-- **Easy**: You can install spotipy2 with pip and start in minutes to build your code.
-- **Fast**: Thanks to [`aiohttp`](https://github.com/aio-libs/aiohttp) speed, spotipy2 is incredibly fast
-- **Documented**: API methods, types and public interfaces are all well documented
-- **Asynchronous**: You can use this library in an async project without having to 
-- **Type-hinted**: All the methods and types are type-hinted, enabling excellent IDE support
-- **Types for each [Spotify Object](https://developer.spotify.com/documentation/web-api/reference/#objects-index)**: Each object has its own Type (Class), allowing for simpler development
+### Key Features
+- **Easy** - Makes the Spotify API easy to understand and intuitive, without giving less customization.
+- **Fast** - Thanks to its async design and [`aiohttp`](https://github.com/aio-libs/aiohttp) speed, spotipy2 is incredibly fast
+- **Type-hinted** - All the methods and types are type-hinted, enabling excellent IDE support
+- **Documented** - API methods, types and interfaces are all well documented
 
-### Requirements
-- Python 3.7 or higher
-- A Spotify client ID and secret.
-
-### Installation
+### Installing
 ```bash
 pip install spotipy2
 ```
 
-## Copyright & License
-- Copyright (C) 2020-2022 CyanBook <https://github.com/cyanbook>
-- Licensed under the terms of the [GNU Lesser General Public License v3 or later (LGPLv3+)](LICENSE)
+## Resources
+- Check out the docs at https://spotipy2.org to learn about Spotipy2.
+- For any issue, open one [here](https://github.com/CyanBook/spotipy2/issues) or contact me privately via [Telegram](https://t.me/CyanBook).
+- If you have anything else to ask, feel free to open a [discussion](https://github.com/CyanBook/spotipy2/discussions)

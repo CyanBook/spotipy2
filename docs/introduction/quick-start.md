@@ -2,8 +2,9 @@
 The next steps are for a super quick start for starting using this library.
 
 ## Get Spotipy2 up and running
-First, open your favorite text editor, paste this code and save the file:
-
+1. Install Spotipy2 with ```pip install spotipy2```.
+2. Get your client `client_id` and `client_secret` from [here](https://developer.spotify.com/dashboard/applications).
+3. Open your favorite editor and copy-paste the following:
 ```python
 import asyncio
 from spotipy2 import Spotify
@@ -23,8 +24,10 @@ async def get_track_name(track_id):
 
 asyncio.run(get_track_name(input("Insert the track ID: ")))
 ```
+4. Replace `client_id` and `client_secret` with your values.
+5. Save the file as `test.py`.
+6. Run the script with `python test.py`.
+7. Type a Track ID and watch getting its name back!
 
-1. Install Spotipy2 as explained [here](/introduction/installation)
-2. Replace `client_id` and `client_secret` with your values
-3. Start the script
-4. Done!
+## Enjoy the api
+This was a very basic example, but this library it's capable of doing much more complex things. Take your time to explore the documentation and look at more in-depth examples in the next pages.
