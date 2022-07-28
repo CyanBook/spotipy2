@@ -1,3 +1,4 @@
+import re
 from setuptools import setup, find_packages
 
 with open("README.md") as f:
@@ -6,9 +7,13 @@ with open("README.md") as f:
 with open("requirements.txt", encoding="utf-8") as f:
     install_requires = f.read().splitlines()
 
+
+with open("spotipy2/__init__.py", encoding="utf-8") as f:
+    version = re.findall(r"__version__ = \"(.+)\"", f.read())[0]
+
 setup(
     name="spotipy2",
-    version="0.5.1",
+    version=version,
     description="The next generation Spotify Web API wrapper for Python",
     long_description=readme,
     long_description_content_type="text/markdown",
