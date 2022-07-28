@@ -7,7 +7,7 @@ from spotipy2 import types
 
 @dataclass
 class Track(types.BaseType):
-    artists: List[types.SimplifiedArtist]
+    artists: List[types.Artist]
     disc_number: int
     duration_ms: int
     explicit: bool
@@ -19,7 +19,7 @@ class Track(types.BaseType):
     track_number: int
     uri: str
 
-    album: Optional[types.SimplifiedAlbum] = field(default=None)
+    album: Optional[types.Album] = field(default=None)
     external_ids: Optional[dict] = field(default=None)
     popularity: Optional[int] = field(default=None)
     is_playable: Optional[bool] = field(default=None)
