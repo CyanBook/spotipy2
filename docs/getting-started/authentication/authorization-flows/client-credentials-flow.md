@@ -7,7 +7,7 @@ You can authenticate via [Client Credentials Flow](https://developer.spotify.com
 
 - client_id (`str`) - The Spotify application's Client ID
 - client_secret (`str`) - The Spotify application's Client secret
-- token ([`Token`](/getting-started/authentication/token/), *optional*) - A token ojectyou already got
+- token ([`Token`](/getting-started/authentication/token/), *optional*) - A token object you already got
 
 #### Example usage
 
