@@ -236,7 +236,7 @@ class OauthFlow(BaseAuthFlow):
         HEADER = self.header
 
         async with http.post(
-                API_URL, form=data, headers=HEADER
+                API_URL, data=data, headers=HEADER
         ) as r:
             response = await r.json()
             # Refresh token is not received on token refresh
