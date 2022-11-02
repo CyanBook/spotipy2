@@ -110,12 +110,12 @@ class OauthFlow(BaseAuthFlow):
         )
 
         final_url = API_URL + urllib.parse.urlencode(data)
-        self.redirect_uri = self.redirect_uri.replace("https://", "http://")
 
-        regex = '(?:http.*://)?(?P<host>[^:/ ]+).?(?P<port>[0-9]*).*'
-        result = re.search(regex, self.redirect_uri)
-        if result.group("host") in ['localhost', '127.0.0.1'] and not self.disable_builtin_server:
-            if result.group("port") != '':
+        if not self.disable_builtin_server:
+            self.redirect_uri = self.redirect_uri.replace("https://", "http://")
+            regex = '(?:http.*://)?(?P<host>[^:/ ]+).?(?P<port>[0-9]*).*'
+            result = re.search(regex, self.redirect_uri)
+            if result.group("host") in ['localhost', '127.0.0.1'] and result.group("port") != '':
                 self.server = OauthServer(self.authenticated_html_response,
                                           self.failed_html_response,
                                           self.state_verifier)
