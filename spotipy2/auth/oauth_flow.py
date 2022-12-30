@@ -211,6 +211,8 @@ class OauthFlow(BaseAuthFlow):
         async with http.post(
                 API_URL, data=data, headers=HEADER
         ) as r:
+            if r.status < 200 or r.status > 299:
+                raise SpotifyException(r.status, r.json()) # example: {'error': 'invalid_grant', 'error_description': 'Invalid redirect URI'}
             return await Token.from_dict(await r.json())
 
     async def refresh_token(self, http: ClientSession) -> Token:
