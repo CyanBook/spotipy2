@@ -21,7 +21,7 @@ class TrackMethods:
     async def get_recommendations(
         self: spotipy2.Spotify,
         artist_ids: Optional[List[str]] = None,
-        tracks_ids: Optional[List[str]] = None,
+        track_ids: Optional[List[str]] = None,
         genre_names: Optional[List[str]] = None,
         limit: Optional[int] = None,
         market: Optional[str] = None,
@@ -36,7 +36,7 @@ class TrackMethods:
                     provide filters and targeting on results.
         """
         assert any(
-            [artist_ids, tracks_ids, genre_names]
+            [artist_ids, track_ids, genre_names]
         ), "You have to specify at least one seed to get recommendations based on"
 
         # Mering with `kwargs` to include the tuneable attributes as well
@@ -44,8 +44,8 @@ class TrackMethods:
 
         if artist_ids:
             params["seed_artists"] = ",".join(list(map(self.get_id, artist_ids)))
-        if tracks_ids:
-            params["seed_tracks"] = ",".join(list(map(self.get_id, tracks_ids)))
+        if track_ids:
+            params["seed_tracks"] = ",".join(list(map(self.get_id, track_ids)))
         if genre_names:
             params["seed_genres"] = ",".join(genre_names)
 
