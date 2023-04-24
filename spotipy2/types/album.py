@@ -25,7 +25,7 @@ class Album(types.BaseType):
     genres: List[str] = field(default=None)
     label: str = field(default=None)
     popularity: int = field(default=None)
-    tracks: List[types.Track] = field(default=None)
+    tracks: types.Paging = field(default=None)
 
     def __str__(self) -> str:
         return self.name
