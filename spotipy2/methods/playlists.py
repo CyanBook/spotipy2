@@ -48,3 +48,11 @@ class PlaylistMethods:
 
             if not playlist_tracks.next:
                 break
+
+    async def get_current_user_playlists(
+        self: spotipy2.Spotify,  # type: ignore,
+        limit: Optional[int] = None,
+        offset: int = 0,
+    ) -> Paging:
+        params = self.wrapper(limit=limit, offset=offset)
+        return await self._get("me/playlists", params=params)
