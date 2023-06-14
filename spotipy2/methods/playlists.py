@@ -49,6 +49,14 @@ class PlaylistMethods:
             if not playlist_tracks.next:
                 break
 
+    async def get_current_user_playlists(
+        self: spotipy2.Spotify,  # type: ignore,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+    ) -> Paging:
+        params = self.wrapper(limit=limit, offset=offset)
+        return await self._get("me/playlists", params=params)
+
     async def create_playlist(
         self: spotipy2.Spotify,  # type: ignore
         user_id: str,
@@ -76,3 +84,4 @@ class PlaylistMethods:
         return await self._post(
             f"playlists/{self.get_id(playlist_id)}/tracks", body=body
         )
+
