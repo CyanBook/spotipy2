@@ -5,10 +5,11 @@ from .artists import ArtistMethods
 from .search import SearchMethods
 from .tracks import TrackMethods
 from .playlists import PlaylistMethods
+from .users import UserMethods
 
 
 class Methods(
-    AlbumMethods, ArtistMethods, SearchMethods, TrackMethods, PlaylistMethods
+    AlbumMethods, ArtistMethods, SearchMethods, TrackMethods, PlaylistMethods, UserMethods
 ):
     @staticmethod
     def get_id(s: str) -> str:

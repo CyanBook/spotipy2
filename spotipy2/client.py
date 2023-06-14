@@ -51,6 +51,7 @@ class Spotify(Methods):
         endpoint: str,
         params: Optional[dict] = None,
         can_be_cached: bool = False,
+        body: Optional[dict] = None,
     ) -> dict:
         cache_enabled = self.cache is not None and can_be_cached
 
@@ -66,12 +67,16 @@ class Spotify(Methods):
         headers = {"Authorization": f"Bearer {token.access_token}"}
 
         async with self.http.request(
-            method, f"{self.API_URL}{endpoint}", params=params, headers=headers
+            method,
+            f"{self.API_URL}{endpoint}",
+            params=params,
+            headers=headers,
+            json=body,
         ) as r:
             json = await r.json()
 
             try:
-                assert r.status == 200
+                assert r.status < 300
             except AssertionError:
                 raise SpotifyException(
                     json["error"]["status"], json["error"]["message"]
@@ -91,6 +96,11 @@ class Spotify(Methods):
         )
 
         return await self._req("GET", endpoint, params, can_be_cached)
+
+    async def _post(
+        self, endpoint: str, body: dict, params: Optional[dict] = None
+    ) -> dict:
+        return await self._req("POST", endpoint, params, body=body)
 
     async def stop(self) -> None:
         await self.http.close()
