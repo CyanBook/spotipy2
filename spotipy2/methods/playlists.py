@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import AsyncGenerator, Optional
+from typing import AsyncGenerator, List, Optional
 
 import spotipy2
 from spotipy2.types import Playlist, Paging, PlaylistItem
@@ -65,3 +65,14 @@ class PlaylistMethods:
         )
         return await self._post(f"users/{self.get_id(user_id)}/playlists", body=body)
 
+
+    async def add_items_to_playlist(
+        self: spotipy2.Spotify,  # type:ignore
+        playlist_id: str,
+        uris: List[str],
+        position: Optional[int] = None,
+    ) -> dict:
+        body = self.wrapper(uris=uris, position=position)
+        return await self._post(
+            f"playlists/{self.get_id(playlist_id)}/tracks", body=body
+        )
