@@ -42,7 +42,7 @@ class OauthFlow(BaseAuthFlow):
         - scope: `Optional[List[str]]`, List of Spotify scopes,
         full list: https://developer.spotify.com/documentation/general/guides/authorization/scopes/
         - show_dialog: `Optional[bool]`, Whether to force the user to approve the app again if they have already done so
-        - token: `Optional[str]`, The access token
+        - token: `Optional[Token]`, The access token
         - open_browser: `bool`, Whether to open the browser or not when get_redirect is called
         - disable_builtin_server: `bool`, If True, the built-in server will not be started
         - authenticated_html_response: `Optional[str]`, The path to a html file which will be displayed if a user is
