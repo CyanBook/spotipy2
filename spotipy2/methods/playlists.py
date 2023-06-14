@@ -49,6 +49,22 @@ class PlaylistMethods:
             if not playlist_tracks.next:
                 break
 
+    async def create_playlist(
+        self: spotipy2.Spotify,  # type: ignore
+        user_id: str,
+        name: str,
+        public: Optional[bool] = None,
+        collaborative: Optional[bool] = None,
+        description: Optional[str] = None,
+    ) -> Playlist:
+        body = self.wrapper(
+            name=name,
+            public=public,
+            collaborative=collaborative,
+            description=description,
+        )
+        return await self._post(f"users/{self.get_id(user_id)}/playlists", body=body)
+
     async def add_items_to_playlist(
         self: spotipy2.Spotify,  # type:ignore
         playlist_id: str,
