@@ -65,6 +65,7 @@ class PlaylistMethods:
         )
         return await self._post(f"users/{self.get_id(user_id)}/playlists", body=body)
 
+
     async def add_items_to_playlist(
         self: spotipy2.Spotify,  # type:ignore
         playlist_id: str,
