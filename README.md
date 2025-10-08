@@ -5,7 +5,7 @@
     <br>
     <b>The next generation Spotify Web API wrapper for Python</b>
     <br>
-    <a href="https://spotipy2.org">
+    <a href="https://spotipy2.netlify.app">
         Documentation
     </a>
     •
