@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/cyanbook/spotipy2">
-        <img src="https://svgshare.com/i/STC.svg" alt="Spotipy2">
+        <img src="https://spotipy2.netlify.app/img/logo.svg" alt="Spotipy2">
     </a>
     <br>
     <b>The next generation Spotify Web API wrapper for Python</b>
